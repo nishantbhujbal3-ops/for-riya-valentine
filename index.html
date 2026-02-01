@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Riya ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    height: 100vh;
+    /* Updated to .jpg as requested */
+    background: url("couple.jpg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  /* Overlay with ZERO blur */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 192, 203, 0.1); /* Very light tint for visibility */
+    backdrop-filter: none; /* Blur removed */
+    z-index: 1;
+  }
+
+  /* Floating hearts background layer */
+  .heart-bg {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.6;
+    animation: float 6s linear infinite;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+  }
+
+  /* Card container is now transparent */
+  .card {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 400px;
+    background: transparent; /* Removed white box */
+    padding: 45px 30px;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    height: 60px;
+  }
+
+  button {
+    border: none;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #yesBtn {
+    background: #f16a8d;
+    color: white;
+    box-shadow: 0 4px 15px rgba(241, 106, 141, 0.4);
+  }
+
+  #noBtn {
+    background: #9b8e9b;
+    color: white;
+    position: absolute;
+    right: 5%;
+  }
+
+  #message {
+    color: white;
+    margin-top: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+</style>
+</head>
+<body>
+
+<audio id="song" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="mainCard">
+  <div class="buttons">
+    <button id="yesBtn">Yes 🤍</button>
+    <button id="noBtn">No 😄</button>
+  </div>
+  <p id="message"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+/* 1. Create floating hearts */
+for (let i = 0; i < 20; i++) {
+  const heart = document.createElement("div");
+  heart.className = "heart-bg";
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+  heart.style.animationDelay = Math.random() * 5 + "s";
+  document.body.appendChild(heart);
+}
+
+/* 2. No Button Runaway Logic */
+const noBtn = document.getElementById("noBtn");
+function moveNo() {
+  const x = Math.random() * 240 - 120;
+  const y = Math.random() * 160 - 80;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNo(); });
+
+/* 3. Yes Button Logic */
+document.getElementById("yesBtn").addEventListener("click", () => {
+  const song = document.getElementById("song");
+  song.volume = 0.5;
+  song.play();
+
+  confetti({
+    particleCount: 150,
+    spread: 70,
+    origin: { y: 0.6 },
+    colors: ['#f16a8d', '#ffffff', '#ffb3c1']
+  });
+
+  document.getElementById("message").innerHTML = "Yay! 🥰 Redirecting...";
+  document.querySelector(".buttons").style.visibility = "hidden";
+
+  setTimeout(() => {
+    window.location.href = "https://wa.me/917620837544?text=Yes%20I%20will%20be%20your%20Valentine%20💖🥰";
+  }, 2500);
+});
+</script>
+
+</body>
+</html>
